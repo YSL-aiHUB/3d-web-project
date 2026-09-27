@@ -1,47 +1,72 @@
-// 1. LENIS SMOOTH SCROLL
-const lenis = new Lenis({ duration: 1.5, smooth: true });
+// 1. LOGIC PRELOADER (CHỜ SPLINE TẢI XONG)
+const preloader = document.getElementById('preloader');
+const splineViewer = document.getElementById('spline-3d');
+
+// Nếu Spline tải thành công, ẩn Preloader
+if(splineViewer) {
+    splineViewer.addEventListener('load', () => {
+        preloader.style.opacity = '0';
+        preloader.style.visibility = 'hidden';
+        playHeroAnimations(); // Bắt đầu chạy animation chữ
+    });
+}
+
+// Fallback: Lỡ mạng quá yếu, sau 6 giây tự động tắt preloader để người dùng xem web
+setTimeout(() => {
+    if (preloader.style.opacity !== '0') {
+        preloader.style.opacity = '0';
+        preloader.style.visibility = 'hidden';
+        playHeroAnimations();
+    }
+}, 6000);
+
+// 2. LENIS SMOOTH SCROLL
+const lenis = new Lenis({ duration: 1.2, smooth: true });
 function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
 requestAnimationFrame(raf);
 
-// 2. CUSTOM CURSOR LOGIC
-const cursor = document.querySelector('.cursor');
-const cursorFollower = document.querySelector('.cursor-follower');
-const hoverTargets = document.querySelectorAll('.hover-target');
+// 3. CUSTOM CURSOR (Bỏ qua nếu là điện thoại)
+if (window.matchMedia("(any-hover: hover)").matches) {
+    const cursor = document.querySelector('.cursor');
+    const cursorFollower = document.querySelector('.cursor-follower');
+    const hoverTargets = document.querySelectorAll('.hover-target');
 
-document.addEventListener('mousemove', (e) => {
-    // Di chuyển chấm nhỏ mượt
-    cursor.style.left = `${e.clientX}px`;
-    cursor.style.top = `${e.clientY}px`;
-    // Di chuyển vòng tròn ngoài có độ trễ
-    setTimeout(() => {
-        cursorFollower.style.transform = `translate(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%))`;
-    }, 50);
-});
-
-// Phóng to con trỏ khi chạm vào nút hoặc thẻ 3D
-hoverTargets.forEach(target => {
-    target.addEventListener('mouseenter', () => {
-        cursorFollower.style.width = '60px';
-        cursorFollower.style.height = '60px';
-        cursorFollower.style.background = 'rgba(0, 206, 201, 0.1)';
-        cursor.style.transform = 'translate(-50%, -50%) scale(0)';
+    document.addEventListener('mousemove', (e) => {
+        cursor.style.left = `${e.clientX}px`;
+        cursor.style.top = `${e.clientY}px`;
+        setTimeout(() => {
+            cursorFollower.style.transform = `translate(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%))`;
+        }, 40);
     });
-    target.addEventListener('mouseleave', () => {
-        cursorFollower.style.width = '30px';
-        cursorFollower.style.height = '30px';
-        cursorFollower.style.background = 'transparent';
-        cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-    });
-});
 
-// 3. GSAP ANIMATIONS
+    hoverTargets.forEach(target => {
+        target.addEventListener('mouseenter', () => {
+            cursorFollower.style.width = '60px';
+            cursorFollower.style.height = '60px';
+            cursorFollower.style.background = 'rgba(0, 206, 201, 0.1)';
+            cursor.style.transform = 'translate(-50%, -50%) scale(0)';
+        });
+        target.addEventListener('mouseleave', () => {
+            cursorFollower.style.width = '30px';
+            cursorFollower.style.height = '30px';
+            cursorFollower.style.background = 'transparent';
+            cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+        });
+    });
+}
+
+// 4. GSAP ANIMATIONS
 gsap.registerPlugin(ScrollTrigger);
-gsap.from(".navbar", { y: -100, duration: 1, ease: "power3.out" });
-gsap.from(".animate-hero", { y: 50, opacity: 0, duration: 1.2, stagger: 0.2, ease: "power4.out", pointerEvents: "auto" });
-gsap.from(".animate-header", { scrollTrigger: { trigger: ".features", start: "top 80%" }, y: 40, opacity: 0, duration: 1 });
-gsap.from(".card-3d-wrapper", { scrollTrigger: { trigger: ".features", start: "top 75%" }, y: 100, opacity: 0, duration: 1, stagger: 0.2, ease: "back.out(1.5)" });
 
-// 4. 3D TILT & GLARE EFFECT
+function playHeroAnimations() {
+    gsap.from(".navbar", { y: -100, duration: 1, ease: "power3.out" });
+    gsap.from(".animate-hero", { y: 30, opacity: 0, duration: 1, stagger: 0.2, ease: "power4.out" });
+}
+
+gsap.from(".animate-header", { scrollTrigger: { trigger: ".features", start: "top 85%" }, y: 40, opacity: 0, duration: 1 });
+gsap.from(".card-3d-wrapper", { scrollTrigger: { trigger: ".features", start: "top 80%" }, y: 80, opacity: 0, duration: 0.8, stagger: 0.15, ease: "back.out(1.2)" });
+
+// 5. 3D TILT & GLARE EFFECT
 const cards = document.querySelectorAll('.card-3d');
 
 cards.forEach(card => {
@@ -58,14 +83,12 @@ cards.forEach(card => {
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
         
-        // Tính góc xoay
-        const rotateX = ((y - centerY) / centerY) * -12; 
-        const rotateY = ((x - centerX) / centerX) * 12;
+        const rotateX = ((y - centerY) / centerY) * -10; 
+        const rotateY = ((x - centerX) / centerX) * 10;
         
         card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        card.style.boxShadow = `${-rotateY}px ${rotateX}px 30px rgba(0,0,0,0.6)`;
+        card.style.boxShadow = `${-rotateY}px ${rotateX}px 25px rgba(0,0,0,0.5)`;
 
-        // Di chuyển vệt sáng ánh sáng (Glare)
         glare.style.opacity = '1';
         glare.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
     };
@@ -78,6 +101,6 @@ cards.forEach(card => {
 
     card.addEventListener('mousemove', handleMove);
     card.addEventListener('mouseleave', handleLeave);
-    card.addEventListener('touchmove', handleMove);
+    card.addEventListener('touchmove', handleMove, {passive: true});
     card.addEventListener('touchend', handleLeave);
 });
