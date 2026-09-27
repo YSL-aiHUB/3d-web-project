@@ -3,80 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Premium Web</title>
-    <!-- Font Inter -->
+    <title>3D Premium Web | Nâng Cấp</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
-    <!-- Link tới file CSS của bạn -->
     <link rel="stylesheet" href="style.css">
+    <!-- Thư viện Spline 3D Viewer -->
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.32/build/spline-viewer.js"></script>
 </head>
 <body>
+    <!-- Con trỏ chuột Custom -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
 
-    <!-- NAVBAR MỜ ẢO -->
     <nav class="navbar">
         <div class="logo">Acode<span>3D</span></div>
-        <a href="#" class="nav-btn">Bắt đầu</a>
+        <a href="#" class="nav-btn hover-target">Bắt đầu</a>
     </nav>
 
-    <!-- HERO 3D (CÓ PARALLAX) -->
     <section class="hero">
+        <!-- Vùng chứa Model 3D thật -->
+        <div class="spline-container">
+            <spline-viewer url="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode"></spline-viewer>
+        </div>
+        
         <div class="hero-content">
             <h1 class="animate-hero">Không Gian<br><span class="text-gradient">Đa Chiều</span></h1>
-            <p class="animate-hero">Hiệu ứng chiều sâu 3D kết hợp tương tác mượt mà. Di chuột hoặc chạm vào các thẻ bên dưới để thấy sự khác biệt.</p>
+            <p class="animate-hero">Hiệu ứng chiều sâu 3D kết hợp tương tác mượt mà. Di chuyển trỏ chuột để thấy sự khác biệt.</p>
         </div>
-        <!-- Vòng tròn 3D trang trí nền -->
-        <div class="glow-sphere"></div>
     </section>
 
-    <!-- DẢI CHỮ CHẠY (MARQUEE) -->
     <section class="marquee-container">
         <div class="marquee-content">
             <h2>TRẢI NGHIỆM 3D ✦ <span>PARALLAX</span> ✦ INTERACTIVE ✦ <span>MƯỢT MÀ</span> ✦ TRẢI NGHIỆM 3D ✦ <span>PARALLAX</span> ✦ INTERACTIVE ✦ <span>MƯỢT MÀ</span> ✦</h2>
         </div>
     </section>
 
-    <!-- KHU VỰC THẺ 3D INTERACTIVE -->
     <section class="features">
         <div class="features-header animate-header">
             <h3>Tương Tác Chiều Sâu</h3>
-            <p>Chạm và di chuyển trên các thẻ để thấy hiệu ứng 3D Tilt</p>
+            <p>Chạm và di chuyển trên các thẻ để thấy ánh sáng và góc nghiêng</p>
         </div>
         <div class="grid">
-            <!-- Thẻ 1 -->
             <div class="card-3d-wrapper">
-                <div class="card-3d">
+                <div class="card-3d hover-target">
+                    <div class="glare"></div> <!-- Lớp ánh sáng động -->
                     <div class="card-content">
                         <div class="icon">🧊</div>
                         <h4>Hình Học Không Gian</h4>
-                        <p>Các phần tử nổi bẩy lên (TranslateZ) tạo cảm giác như vật thể thật.</p>
+                        <p>Các phần tử nổi bật (TranslateZ) tạo cảm giác như vật thể thật.</p>
                     </div>
                 </div>
             </div>
-            <!-- Thẻ 2 -->
             <div class="card-3d-wrapper">
-                <div class="card-3d">
+                <div class="card-3d hover-target">
+                    <div class="glare"></div>
                     <div class="card-content">
                         <div class="icon">☄️</div>
-                        <h4>Theo Dõi Chuyển Động</h4>
-                        <p>Trục X và Y xoay theo tọa độ ngón tay hoặc con trỏ chuột của bạn.</p>
+                        <h4>Hiệu Ứng Ánh Sáng</h4>
+                        <p>Vệt sáng vật lý quét qua bề mặt mô phỏng ánh sáng thật.</p>
                     </div>
                 </div>
             </div>
-            <!-- Thẻ 3 -->
             <div class="card-3d-wrapper">
-                <div class="card-3d">
+                <div class="card-3d hover-target">
+                    <div class="glare"></div>
                     <div class="card-content">
                         <div class="icon">🔮</div>
                         <h4>Đổ Bóng Động</h4>
-                        <p>Ánh sáng và bóng đổ thay đổi liên tục theo góc nhìn (Perspective).</p>
+                        <p>Ánh sáng và bóng đổ thay đổi liên tục theo góc nhìn.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER -->
     <footer>
-        <p>© 2026 Code by You via Acode - 3D Interactive Edition</p>
+        <p>© 2026 Code by You via Acode - Ultimate 3D Edition</p>
     </footer>
 
     <!-- Thư viện ngoài -->
@@ -84,7 +85,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     
-    <!-- Link tới file JS của bạn -->
     <script src="script.js"></script>
 </body>
 </html>
