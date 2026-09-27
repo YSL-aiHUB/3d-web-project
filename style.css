@@ -11,68 +11,86 @@ body {
     color: #fff; 
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
-    cursor: none; /* Ẩn chuột mặc định của hệ thống */
+    cursor: none;
 }
 
-/* CUSTOM CURSOR */
-.cursor, .cursor-follower {
-    position: fixed;
-    top: 0; left: 0;
-    pointer-events: none;
+/* ================= PRELOADER ================= */
+#preloader {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: #000; z-index: 99999;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+.loader-circle {
+    width: 50px; height: 50px;
+    border: 3px solid rgba(255,255,255,0.1);
+    border-top-color: var(--secondary);
     border-radius: 50%;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
 }
-.cursor {
-    width: 6px; height: 6px;
-    background: var(--secondary);
-    transition: width 0.2s, height 0.2s;
+@keyframes spin { to { transform: rotate(360deg); } }
+#preloader p { color: #888; font-size: 0.9rem; font-weight: 600; letter-spacing: 1px; }
+
+/* ================= CUSTOM CURSOR (Chỉ máy tính) ================= */
+.cursor, .cursor-follower {
+    position: fixed; top: 0; left: 0; pointer-events: none;
+    border-radius: 50%; z-index: 9999; transform: translate(-50%, -50%);
 }
+.cursor { width: 6px; height: 6px; background: var(--secondary); transition: width 0.2s, height 0.2s; }
 .cursor-follower {
-    width: 30px; height: 30px;
-    border: 1px solid rgba(0, 206, 201, 0.5);
+    width: 30px; height: 30px; border: 1px solid rgba(0, 206, 201, 0.5);
     transition: transform 0.1s ease-out, width 0.2s, height 0.2s, background 0.2s;
 }
 
-/* NAVBAR */
+/* Tắt cursor ảo trên Mobile & Tablet */
+@media (hover: none) and (pointer: coarse) {
+    .cursor, .cursor-follower { display: none !important; }
+    body { cursor: auto; }
+}
+
+/* ================= GIAO DIỆN CHÍNH ================= */
 .navbar {
-    position: fixed; top: 0; left: 0; width: 100%; padding: 20px 5%;
+    position: fixed; top: 0; left: 0; width: 100%; padding: 15px 5%;
     display: flex; justify-content: space-between; align-items: center;
-    z-index: 1000; background: rgba(3, 3, 5, 0.3);
-    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    z-index: 1000; background: rgba(3, 3, 5, 0.5);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 .logo { font-size: 1.5rem; font-weight: 900; letter-spacing: -1px; }
 .logo span { color: var(--secondary); }
 .nav-btn {
-    background: #fff; color: #000; padding: 10px 24px; border-radius: 30px;
+    background: #fff; color: #000; padding: 10px 20px; border-radius: 30px;
     text-decoration: none; font-weight: 600; transition: transform 0.3s ease;
 }
 
-/* HERO & SPLINE 3D */
+/* ================= HERO & SPLINE 3D ================= */
 .hero {
-    height: 100vh; display: flex; justify-content: center; align-items: center;
-    text-align: center; position: relative; overflow: hidden;
+    position: relative; height: 100vh; width: 100vw;
+    display: flex; justify-content: center; align-items: center;
+    text-align: center; overflow: hidden;
+    background: radial-gradient(circle at center, #1a1a2e 0%, #030305 100%); /* Nền dự phòng */
 }
 .spline-container {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    z-index: 1; pointer-events: auto; /* Cho phép tương tác xoay khối 3D */
+    position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1;
+    pointer-events: none; /* Khóa tương tác 3D để không bị kẹt khi cuộn trang trên điện thoại */
     opacity: 0.8;
 }
+spline-viewer { width: 100%; height: 100%; }
+
 .hero-content {
     position: relative; z-index: 10; pointer-events: none;
-    animation: float 6s ease-in-out infinite; 
+    padding: 0 20px; animation: float 6s ease-in-out infinite; 
 }
-.hero h1 { font-size: clamp(3.5rem, 10vw, 7rem); font-weight: 900; line-height: 1.1; margin-bottom: 20px; }
+.hero h1 { font-size: clamp(3rem, 10vw, 6.5rem); font-weight: 900; line-height: 1.1; margin-bottom: 20px; }
 .text-gradient {
     background: linear-gradient(135deg, var(--primary), var(--secondary), #fd79a8);
-    background-size: 200% auto;
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     animation: gradientMove 3s ease infinite;
 }
-.hero p { font-size: 1.2rem; color: #a0a0a0; max-width: 500px; margin: 0 auto; }
+.hero p { font-size: 1.1rem; color: #a0a0a0; max-width: 500px; margin: 0 auto; line-height: 1.5; }
 
-/* MARQUEE */
+/* ================= MARQUEE ================= */
 .marquee-container {
     width: 100%; padding: 30px 0; background: #0a0a0c;
     transform: rotate(-2deg) scale(1.05);
@@ -80,41 +98,35 @@ body {
     margin: 80px 0; white-space: nowrap; position: relative; z-index: 5;
 }
 .marquee-content { display: inline-block; animation: scroll-left 15s linear infinite; }
-.marquee-content h2 { font-size: 3rem; font-weight: 900; display: inline-block; padding-right: 50px; color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.6); }
+.marquee-content h2 { font-size: 2.5rem; font-weight: 900; display: inline-block; padding-right: 50px; color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.6); }
 .marquee-content h2 span { color: #fff; -webkit-text-stroke: 0; }
 
-/* 3D CARDS & GLARE */
-.features { padding: 100px 5%; max-width: 1200px; margin: 0 auto; position: relative; z-index: 5; }
-.features-header { text-align: center; margin-bottom: 80px; }
-.features-header h3 { font-size: 3rem; margin-bottom: 10px; }
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+/* ================= 3D CARDS ================= */
+.features { padding: 80px 5%; max-width: 1200px; margin: 0 auto; position: relative; z-index: 5; }
+.features-header { text-align: center; margin-bottom: 60px; }
+.features-header h3 { font-size: 2.5rem; margin-bottom: 10px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
 
 .card-3d-wrapper { perspective: 1200px; }
 .card-3d {
-    position: relative; width: 100%; height: 400px;
-    background: var(--card-bg);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 30px; padding: 40px;
+    position: relative; width: 100%; height: 380px;
+    background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px; padding: 30px;
     transform-style: preserve-3d;
     transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.2s;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    display: flex; flex-direction: column; justify-content: center;
-    overflow: hidden; /* Cần thiết để chứa lớp ánh sáng */
+    display: flex; flex-direction: column; justify-content: center; overflow: hidden;
 }
-/* Hiệu ứng vệt sáng (Glare) */
 .glare {
     position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 40%);
-    opacity: 0; pointer-events: none; transition: opacity 0.3s;
-    z-index: 1;
+    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15) 0%, transparent 50%);
+    opacity: 0; pointer-events: none; transition: opacity 0.3s; z-index: 1;
 }
-.card-content {
-    transform: translateZ(60px); z-index: 2; pointer-events: none;
-}
-.card-3d .icon { font-size: 4rem; margin-bottom: 20px; }
-.card-3d h4 { font-size: 1.8rem; margin-bottom: 15px; }
-.card-3d p { color: #aaa; line-height: 1.6; font-size: 1.1rem; }
-footer { text-align: center; padding: 50px; color: #555; }
+.card-content { transform: translateZ(50px); z-index: 2; pointer-events: none; }
+.card-3d .icon { font-size: 3.5rem; margin-bottom: 20px; }
+.card-3d h4 { font-size: 1.5rem; margin-bottom: 15px; }
+.card-3d p { color: #aaa; line-height: 1.6; font-size: 1rem; }
+footer { text-align: center; padding: 40px; color: #555; font-size: 0.9rem; }
 
 @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
