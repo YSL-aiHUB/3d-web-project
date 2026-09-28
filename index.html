@@ -2,95 +2,56 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>3D Premium Web | Ultimate</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <!-- Thư viện Spline 3D Viewer -->
-    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.32/build/spline-viewer.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xe Bánh Mì Vỉa Hè</title>
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-    <!-- MÀN HÌNH CHỜ (PRELOADER) -->
-    <div id="preloader">
-        <div class="loader-circle"></div>
-        <p>Đang khởi tạo không gian 3D...</p>
+    <div id="game-container">
+        <!-- Bảng thông tin -->
+        <header class="top-bar">
+            <h1>🥖 Bánh Mì Ghiền</h1>
+            <div class="money">Tiền: <span id="money-display">0</span> VNĐ</div>
+        </header>
+
+        <!-- Khu vực Radio -->
+        <div id="radio-station">
+            <div class="radio-body">
+                <span class="antenna">📻</span>
+                <button id="btn-radio-toggle">Bật Nhạc</button>
+            </div>
+            <div id="radio-status">Đang tắt...</div>
+            <!-- Thẻ audio ẩn, sử dụng link catbox -->
+            <audio id="bg-radio" loop>
+                <!-- Thay link .mp3 của bạn từ catbox.moe vào đây -->
+                <source src="https://files.catbox.moe/uyh5ks.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+
+        <!-- Khu vực khách hàng -->
+        <div id="customer-area">
+            <div id="customer-order" class="hidden">
+                💭 Cho 1 ổ: Bánh Mì + Pate + Thịt + Rau
+            </div>
+            <div id="customer-sprite">🧍‍♂️</div>
+        </div>
+
+        <!-- Khu vực tủ bánh (Bếp) -->
+        <div id="kitchen-area">
+            <div id="current-making">Đang làm: <span id="plate">Chưa có gì</span></div>
+            <div class="ingredients">
+                <button class="btn-item" data-item="Bánh Mì">🥖 Bánh Mì</button>
+                <button class="btn-item" data-item="Pate">🥫 Phết Pate</button>
+                <button class="btn-item" data-item="Thịt">🍖 Thêm Thịt</button>
+                <button class="btn-item" data-item="Rau">🌿 Thêm Rau</button>
+            </div>
+            <button id="btn-serve" class="action-btn">🛒 Giao Cho Khách</button>
+            <button id="btn-trash" class="action-btn trash">🗑️ Bỏ vào thùng rác</button>
+        </div>
     </div>
 
-    <!-- CON TRỎ CHUỘT ẢO (Chỉ hiện trên máy tính) -->
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
-
-    <nav class="navbar">
-        <div class="logo">Acode<span>3D</span></div>
-        <a href="#" class="nav-btn hover-target">Bắt đầu</a>
-    </nav>
-
-    <section class="hero">
-        <!-- Vùng chứa Model 3D -->
-        <div class="spline-container">
-            <!-- Dùng một model Spline nhẹ để test mượt hơn -->
-            <spline-viewer id="spline-3d" url="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode"></spline-viewer>
-        </div>
-        
-        <div class="hero-content">
-            <h1 class="animate-hero">Không Gian<br><span class="text-gradient">Đa Chiều</span></h1>
-            <p class="animate-hero">Hiệu ứng chiều sâu 3D kết hợp tương tác mượt mà. Di chuyển trỏ chuột hoặc vuốt chạm để thấy sự khác biệt.</p>
-        </div>
-    </section>
-
-    <section class="marquee-container">
-        <div class="marquee-content">
-            <h2>TRẢI NGHIỆM 3D ✦ <span>PARALLAX</span> ✦ INTERACTIVE ✦ <span>MƯỢT MÀ</span> ✦ TRẢI NGHIỆM 3D ✦ <span>PARALLAX</span> ✦ INTERACTIVE ✦ <span>MƯỢT MÀ</span> ✦</h2>
-        </div>
-    </section>
-
-    <section class="features">
-        <div class="features-header animate-header">
-            <h3>Tương Tác Chiều Sâu</h3>
-            <p>Chạm và di chuyển trên các thẻ để thấy ánh sáng và góc nghiêng</p>
-        </div>
-        <div class="grid">
-            <div class="card-3d-wrapper">
-                <div class="card-3d hover-target">
-                    <div class="glare"></div>
-                    <div class="card-content">
-                        <div class="icon">🧊</div>
-                        <h4>Hình Học Không Gian</h4>
-                        <p>Các phần tử nổi bật tạo cảm giác như vật thể thật cầm trên tay.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="card-3d-wrapper">
-                <div class="card-3d hover-target">
-                    <div class="glare"></div>
-                    <div class="card-content">
-                        <div class="icon">☄️</div>
-                        <h4>Hiệu Ứng Ánh Sáng</h4>
-                        <p>Vệt sáng vật lý quét qua bề mặt mô phỏng ánh sáng thật.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="card-3d-wrapper">
-                <div class="card-3d hover-target">
-                    <div class="glare"></div>
-                    <div class="card-content">
-                        <div class="icon">🔮</div>
-                        <h4>Đổ Bóng Động</h4>
-                        <p>Ánh sáng và bóng đổ thay đổi liên tục theo góc nhìn.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <p>© 2026 Code by You via Acode - Ultimate 3D Edition</p>
-    </footer>
-
-    <!-- Thư viện -->
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="script.js"></script>
+    <!-- Nạp các file JS -->
+    <script src="js/audio.js"></script>
+    <script src="js/logic.js"></script>
 </body>
 </html>
