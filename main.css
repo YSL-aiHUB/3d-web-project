@@ -1,11 +1,10 @@
+/* css/main.css */
 body {
-    font-family: 'Courier New', Courier, monospace; /* Font chữ kiểu cổ điển/hoài cổ */
+    font-family: 'Courier New', Courier, monospace;
     background-color: #e0e0e0;
-    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
 
 #game-container {
@@ -15,10 +14,11 @@ body {
     border: 4px solid #333;
     position: relative;
     box-shadow: 10px 10px 0px rgba(0,0,0,0.2);
+    overflow: hidden; /* Tránh text bay ra ngoài khung */
 }
 
 .top-bar {
-    background-color: #d32f2f; /* Đỏ tủ bánh mì */
+    background-color: #d32f2f;
     color: white;
     padding: 10px 20px;
     display: flex;
@@ -31,12 +31,13 @@ body {
     position: absolute;
     top: 80px;
     right: 20px;
-    background: #6d4c41; /* Màu gỗ của radio cũ */
+    background: #6d4c41;
     color: white;
     padding: 10px;
     border-radius: 8px;
     border: 2px solid #3e2723;
     text-align: center;
+    z-index: 10;
 }
 
 #btn-radio-toggle {
@@ -47,49 +48,7 @@ body {
     padding: 5px 10px;
 }
 
-/* --- Tủ Bánh Mì --- */
-#kitchen-area {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background: #bbdefb; /* Kính tủ màu xanh lơ */
-    border-top: 5px solid silver;
-    padding: 20px;
-    box-sizing: border-box;
-    text-align: center;
-}
-
-.btn-item {
-    font-size: 16px;
-    padding: 10px 15px;
-    margin: 5px;
-    cursor: pointer;
-    background: #fff;
-    border: 2px solid #888;
-    border-radius: 5px;
-    transition: 0.1s;
-}
-
-.btn-item:active {
-    transform: scale(0.95);
-    background: #e0f7fa;
-}
-
-.action-btn {
-    font-size: 18px;
-    font-weight: bold;
-    padding: 10px 20px;
-    margin-top: 15px;
-    background: #4caf50;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-.action-btn.trash {
-    background: #f44336;
-}
-/* --- Các nâng cấp UI --- */
+/* --- Cửa hàng --- */
 #shop-area {
     position: absolute;
     top: 80px;
@@ -113,6 +72,32 @@ body {
     cursor: not-allowed;
 }
 
+/* --- Khu vực Khách --- */
+#customer-area {
+    position: absolute;
+    top: 250px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+#customer-order {
+    background: white;
+    border: 2px solid #333;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+#customer-sprite {
+    font-size: 80px; /* To ra một chút cho giống người */
+}
+
+.hidden {
+    display: none !important;
+}
+
 /* --- Thanh kiên nhẫn --- */
 .patience-bar-container {
     width: 100%;
@@ -131,30 +116,11 @@ body {
     transition: width 0.1s linear, background-color 0.3s;
 }
 
-/* --- Hiệu ứng Rung lắc (Khi làm sai) --- */
-.shake {
-    animation: shake 0.5s;
-}
-@keyframes shake {
-    0% { transform: translate(1px, 1px) rotate(0deg); }
-    10% { transform: translate(-1px, -2px) rotate(-1deg); }
-    20% { transform: translate(-3px, 0px) rotate(1deg); }
-    30% { transform: translate(3px, 2px) rotate(0deg); }
-    40% { transform: translate(1px, -1px) rotate(1deg); }
-    50% { transform: translate(-1px, 2px) rotate(-1deg); }
-    60% { transform: translate(-3px, 1px) rotate(0deg); }
-    70% { transform: translate(3px, 1px) rotate(-1deg); }
-    80% { transform: translate(-1px, -1px) rotate(1deg); }
-    90% { transform: translate(1px, 2px) rotate(0deg); }
-    100% { transform: translate(1px, -2px) rotate(-1deg); }
-}
-
-/* --- Thông báo bay lên (Tiền thưởng) --- */
+/* --- Floating Text Base (Không có animation ở đây) --- */
 #floating-text-container {
     position: absolute;
     top: 40%;
     left: 50%;
-    transform: translate(-50%, -50%);
     pointer-events: none;
     z-index: 100;
 }
@@ -164,12 +130,50 @@ body {
     font-weight: bold;
     color: #4caf50;
     text-shadow: 2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff;
-    animation: floatUp 1.5s forwards;
     position: absolute;
+    left: -50px; /* Căn giữa tương đối so với container */
 }
 .floating-text.bad { color: #f44336; }
 
-@keyframes floatUp {
-    0% { opacity: 1; transform: translateY(0); }
-    100% { opacity: 0; transform: translateY(-50px); }
+/* --- Tủ Bánh Mì --- */
+#kitchen-area {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: #bbdefb;
+    border-top: 5px solid silver;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.btn-item {
+    font-size: 16px;
+    padding: 10px 15px;
+    margin: 5px;
+    cursor: pointer;
+    background: #fff;
+    border: 2px solid #888;
+    border-radius: 5px;
+    transition: 0.1s;
+}
+
+.btn-item:active {
+    background: #e0f7fa;
+}
+
+.action-btn {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    margin-top: 15px;
+    background: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.action-btn.trash {
+    background: #f44336;
 }
