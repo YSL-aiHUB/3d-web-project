@@ -3,7 +3,7 @@
 Một tựa game quản lý thời gian trên nền nền tảng Web mang đậm "vibe" đường phố Việt Nam. Bạn sẽ hóa thân thành một người khởi nghiệp với chiếc xe bánh mì nhỏ, phục vụ những vị khách hối hả và nâng cấp đồ nghề để trở thành "ông trùm vỉa hè".
 
 ## 🎮 Chơi thử ngay
-👉 **[Link chơi game trực tiếp tại đây]**(Thay_bằng_link_GitHub_Pages_của_bạn_sau_khi_deploy)
+👉 **[Link chơi game trực tiếp tại đây]**(https://ysl-aihub.github.io/3d-web-project/)
 
 ## 📖 Cốt truyện
 Sáng sớm tại một ngã tư nhộn nhịp, tiếng xe máy râm ran và chiếc radio cũ rè rè phát những bản lofi quen thuộc. Bạn đứng sau tủ kính viền nhôm, tay thoăn thoắt xẻ bánh, phết pate, gắp chả lụa. Khách hàng thì luôn vội vã, nếu bạn làm chậm hoặc sai món, họ sẽ bỏ đi. Hãy chứng minh tốc độ của bạn và kiếm thật nhiều tiền!
