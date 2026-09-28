@@ -3,33 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Tiệm Bánh Mì (Giao diện mới)</title>
+    <title>Tiệm Bánh Mì</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
     <div id="game-container">
-        <!-- Top bar: Ngày, Tiền, Đánh giá -->
+        <!-- Top bar: Ngày, Tiền, Đánh giá, Nút nhạc -->
         <header class="top-bar">
             <div class="top-left">
-                <span class="day">Ngày 14</span>
-                <span class="time">⏰ 11:00</span>
+                <span class="day">Ngày 1</span>
             </div>
             <div class="top-center">
-                <div class="money">217,8k</div>
+                <div class="money">0đ</div>
             </div>
-            <div class="top-right">
-                <span>⭐⭐⭐⭐⭐</span>
-                <span class="rating">4.9 • 350 đánh giá</span>
+            <div class="top-right" style="display: flex; gap: 10px; align-items: center;">
+                <button id="btn-radio-toggle" style="background: #ffb6c1; border: 2px solid #5d4037; border-radius: 5px; padding: 2px 5px; font-weight: bold; cursor: pointer; color: #5d4037;">📻 Bật</button>
+                <span class="rating">⭐⭐⭐⭐⭐</span>
             </div>
         </header>
 
+        <!-- Thẻ audio ẩn phát nhạc nền -->
+        <audio id="bg-radio" loop>
+            <source src="https://files.catbox.moe/your-audio-file.mp3" type="audio/mpeg">
+        </audio>
+
         <!-- Khu vực Khách hàng & Order -->
         <div id="customer-area">
-            <div class="customer-avatar">👨‍💼</div>
-            <div class="bubble-order">
-                <p id="order-text">Làm cho chú 1 ổ bánh mì đầy đủ, nhiều pate nha cháu!</p>
+            <div class="customer-avatar" style="display: none;">
+                <!-- Nhớ đổi tên file ảnh tương ứng mà bạn đã tải -->
+                <img src="assets/images/khach1.png" alt="Khách" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+            </div>
+            <div class="bubble-order" style="display: none;">
+                <p id="order-text">Làm cho chú 1 ổ bánh mì đầy đủ nha cháu!</p>
                 <div class="patience-bar-container">
                     <span>KIÊN NHẪN</span>
                     <div class="patience-track">
@@ -44,44 +51,72 @@
 
         <!-- Khu vực Quầy làm việc -->
         <div id="work-station">
-            <!-- Tầng 1: Các loại sốt/pate (Tương đương quầy trà) -->
+            <!-- Tầng 1: Các loại sốt/pate -->
             <div class="shelf">
-                <div class="ingredient-item">🥫<span>Pate</span></div>
-                <div class="ingredient-item">🧈<span>Bơ</span></div>
-                <div class="ingredient-item">🌶️<span>Tương ớt</span></div>
+                <!-- Class btn-item và data-item là BẮT BUỘC để game chấm điểm -->
+                <div class="ingredient-item btn-item" data-item="Pate">
+                    <img src="assets/images/pate.png" alt="Pate" style="width: 40px; pointer-events: none;">
+                    <span style="pointer-events: none;">Pate</span>
+                </div>
+                <div class="ingredient-item btn-item" data-item="Bơ">
+                    <img src="assets/images/bo.png" alt="Bơ" style="width: 40px; pointer-events: none;">
+                    <span style="pointer-events: none;">Bơ</span>
+                </div>
+                <div class="ingredient-item btn-item" data-item="Tương ớt">
+                    <img src="assets/images/tuong_ot.png" alt="Tương ớt" style="width: 40px; pointer-events: none;">
+                    <span style="pointer-events: none;">Tương ớt</span>
+                </div>
             </div>
 
-            <!-- Tầng 2: Nguyên liệu chính (Tương đương khay topping) -->
+            <!-- Tầng 2: Khay làm bánh & Khay nguyên liệu chính -->
             <div class="shelf grid-shelf">
-                <!-- Khu vực lấy bánh -->
                 <div class="board-area">
                     <div id="plate">Lấy bánh mì</div>
                 </div>
-                <!-- Khay topping -->
                 <div class="topping-grid">
-                    <div class="grid-item">🥩<span>Thịt chả</span></div>
-                    <div class="grid-item">🍖<span>Thịt nướng</span></div>
-                    <div class="grid-item">🍳<span>Trứng</span></div>
+                    <div class="grid-item btn-item" data-item="Bánh Mì">
+                        <img src="assets/images/banh_mi.png" alt="Bánh Mì" style="width: 35px; pointer-events: none;">
+                        <span style="pointer-events: none;">Bánh Mì</span>
+                    </div>
+                    <div class="grid-item btn-item" data-item="Thịt">
+                        <img src="assets/images/thit.png" alt="Thịt" style="width: 35px; pointer-events: none;">
+                        <span style="pointer-events: none;">Thịt chả</span>
+                    </div>
+                    <div class="grid-item btn-item" data-item="Trứng">
+                        <img src="assets/images/trung.png" alt="Trứng" style="width: 35px; pointer-events: none;">
+                        <span style="pointer-events: none;">Trứng ốp</span>
+                    </div>
                     <div class="grid-item empty">Hết</div>
                     <div class="grid-item locked">🔒</div>
                     <div class="grid-item locked">🔒</div>
                 </div>
             </div>
 
-            <!-- Tầng 3: Rau củ (Tương đương đá/đường) -->
+            <!-- Tầng 3: Khay rau củ -->
             <div class="shelf bottom-shelf">
-                <div class="ingredient-item box">🥒<span>Dưa leo</span></div>
-                <div class="ingredient-item box">🌿<span>Ngò rí</span></div>
-                <div class="ingredient-item box">🥕<span>Đồ chua</span></div>
+                <div class="ingredient-item box btn-item" data-item="Rau">
+                    <img src="assets/images/dua_leo.png" alt="Dưa leo" style="width: 45px; pointer-events: none;">
+                    <span style="pointer-events: none;">Dưa leo</span>
+                </div>
+                <div class="ingredient-item box btn-item" data-item="Ngò">
+                    <img src="assets/images/ngo_ri.png" alt="Ngò rí" style="width: 45px; pointer-events: none;">
+                    <span style="pointer-events: none;">Ngò rí</span>
+                </div>
+                <div class="ingredient-item box btn-item" data-item="Đồ chua">
+                    <img src="assets/images/do_chua.png" alt="Đồ chua" style="width: 45px; pointer-events: none;">
+                    <span style="pointer-events: none;">Đồ chua</span>
+                </div>
             </div>
         </div>
 
-        <!-- Nút Giao hàng -->
-        <div class="bottom-action">
-            <button id="btn-serve">Giao cho khách</button>
+        <!-- Nút Action Giao hàng & Bỏ làm lại -->
+        <div class="bottom-action" style="display: flex; gap: 10px; padding: 15px; background: var(--bg-color);">
+            <button id="btn-trash" style="flex: 1; padding: 15px; background-color: #f44336; color: white; font-size: 16px; font-weight: bold; border: none; border-radius: 20px; cursor: pointer; border: 2px solid #5d4037;">🗑️ Bỏ đi</button>
+            <button id="btn-serve" style="flex: 2; padding: 15px; background-color: #4ba3e3; color: white; font-size: 18px; font-weight: bold; border: none; border-radius: 20px; cursor: pointer; border: 2px solid #5d4037;">Giao cho khách</button>
         </div>
     </div>
 
+    <!-- Gọi các file JS -->
     <script src="js/data.js"></script>
     <script src="js/state.js"></script>
     <script src="js/ui.js"></script>
