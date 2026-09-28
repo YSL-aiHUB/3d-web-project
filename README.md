@@ -1,25 +1,23 @@
-# 3D Premium Web - Acode Project
+# 🥖 Bánh Mì Ghiền - Trò Chơi Bán Hàng Vỉa Hè
 
-Dự án website với hiệu ứng 3D, Parallax và Smooth Scrolling siêu mượt, được thiết kế và lập trình ngay trên điện thoại bằng Acode.
+Một tựa game quản lý thời gian trên nền nền tảng Web mang đậm "vibe" đường phố Việt Nam. Bạn sẽ hóa thân thành một người khởi nghiệp với chiếc xe bánh mì nhỏ, phục vụ những vị khách hối hả và nâng cấp đồ nghề để trở thành "ông trùm vỉa hè".
 
-## 🌟 Tính Năng Nổi Bật
-- **Glassmorphism Navbar**: Thanh điều hướng trong suốt mờ ảo.
-- **Hiệu ứng Tilt 3D**: Các thẻ tính năng xoay và đổ bóng động theo ngón tay/chuột (Interactive).
-- **Smooth Scrolling**: Trải nghiệm cuộn trang mượt như lụa nhờ thư viện Lenis.
-- **GSAP Animations**: Hiệu ứng xuất hiện ấn tượng (Stagger) khi cuộn trang.
-- **Infinite Marquee**: Dải chữ chạy nghiêng vô tận phong cách Awwwards.
+## 🎮 Chơi thử ngay
+👉 **[Link chơi game trực tiếp tại đây]**(Thay_bằng_link_GitHub_Pages_của_bạn_sau_khi_deploy)
 
-## 🚀 Công Nghệ Sử Dụng
-- HTML5, CSS3, JavaScript nguyên bản.
-- Thư viện [Lenis](https://github.com/studio-freight/lenis).
-- Thư viện [GSAP & ScrollTrigger](https://greensock.com/gsap/).
+## 📖 Cốt truyện
+Sáng sớm tại một ngã tư nhộn nhịp, tiếng xe máy râm ran và chiếc radio cũ rè rè phát những bản lofi quen thuộc. Bạn đứng sau tủ kính viền nhôm, tay thoăn thoắt xẻ bánh, phết pate, gắp chả lụa. Khách hàng thì luôn vội vã, nếu bạn làm chậm hoặc sai món, họ sẽ bỏ đi. Hãy chứng minh tốc độ của bạn và kiếm thật nhiều tiền!
 
-## 📱 Hướng Dẫn Xem
-1. Mở file `index.html` bằng bất kỳ trình duyệt web nào.
-2. Di chuột hoặc dùng ngón tay lướt và chạm vào các thẻ để cảm nhận hiệu ứng 3D.
+## ✨ Tính năng nổi bật (Features)
+- **Gameplay nhịp độ cao:** Phối hợp các nguyên liệu (Bánh mì, Pate, Thịt, Rau) đúng theo order của khách.
+- **Hệ thống Áp lực (Patience Bar):** Khách hàng có giới hạn chờ đợi. Phục vụ nhanh để nhận tiền, chậm trễ khách sẽ nổi giận bỏ đi.
+- **Cửa hàng (Shop System):** Dùng tiền kiếm được để mua vật phẩm hỗ trợ (Ví dụ: Mua quạt máy giúp khách mát mẻ và chờ đợi lâu hơn).
+- **Lưu tiến trình (Auto-save):** Sử dụng `LocalStorage`, F5 trình duyệt không bị mất tiền và đồ đã mua.
+- **Kiến trúc Modular JS:** Code được chia nhỏ thành MVC (Model - View - Controller) cực kỳ dễ đọc và mở rộng.
 
-## 🌐 Live Demo
-*(Bạn có thể bật GitHub Pages để có link xem trực tiếp tại đây)*
-https://ysl-aihub.github.io/3d-web-project/
----
-*Được code trên điện thoại bằng Acode Editor.*
+## 🛠️ Cài đặt & Chạy trên máy cá nhân
+Trò chơi được viết hoàn toàn bằng HTML, CSS và Vanilla JavaScript, không cần cài đặt server hay framework phức tạp.
+
+1. Clone repository này về máy:
+   ```bash
+   git clone [[https://github.com/TenCuaBan/banh-mi-ghien.git](https://github.com/TenCuaBan/banh-mi-ghien.git)](https://github.com/YSL-aiHUB/3d-web-project/edit/main/README.md)
