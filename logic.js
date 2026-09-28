@@ -1,22 +1,18 @@
+// js/logic.js
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. Quản lý trạng thái (Data/State)
-    // Lấy tiền từ LocalStorage, nếu chơi lần đầu thì = 0
     let money = parseInt(localStorage.getItem("banhmi_money")) || 0;
     let currentBanhMi = []; 
-    let hasFan = localStorage.getItem("banhmi_fan") === "true"; // Đã mua quạt chưa?
+    let hasFan = localStorage.getItem("banhmi_fan") === "true";
     
-    // Các công thức (sau này có thể random)
     const recipes = [
         { name: "Bánh mì Đầy Đủ", req: ["Bánh Mì", "Pate", "Thịt", "Rau"], price: 15000 },
-        { name: "Bánh mì Không Rau", req: ["Bánh Mì", "Pate", "Thịt"], price: 12000 }
+        { name: "Bánh mì Không Rau", req: ["Bánh Mì", "Pate", "Thịt"], price: 12000 },
+        { name: "Bánh mì Pate Chả", req: ["Bánh Mì", "Pate", "Thịt"], price: 12000 } // Tạm coi Thịt là Chả
     ];
     let currentOrder = null;
-
-    // Timer cho khách
     let patienceTimer;
     let currentPatience = 100;
 
-    // DOM Elements
     const moneyDisplay = document.getElementById("money-display");
     const plateDisplay = document.getElementById("plate");
     const customerOrderUI = document.getElementById("customer-order");
@@ -26,14 +22,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const kitchenArea = document.getElementById("kitchen-area");
     const floatingContainer = document.getElementById("floating-text-container");
 
-    // Init Game
     updateMoney(0);
     checkShop();
-    setTimeout(spawnCustomer, 2000); // Đợi 2s rồi gọi khách đầu tiên
+    setTimeout(spawnCustomer, 2000);
 
-    // --- LOGIC BẾP & LÀM MÓN ---
+    // Xử lý nút nguyên liệu
     document.querySelectorAll(".btn-item").forEach(btn => {
         btn.addEventListener("click", (e) => {
+            // Thêm hiệu ứng ấn nút pop-click
+            e.target.classList.remove("pop-click");
+            void e.target.offsetWidth; // Trigger reflow để restart animation
+            e.target.classList.add("pop-click");
+
             currentBanhMi.push(e.target.getAttribute("data-item"));
             updatePlate();
         });
@@ -44,8 +44,9 @@ document.addEventListener("DOMContentLoaded", () => {
         updatePlate();
     });
 
+    // Giao món
     document.getElementById("btn-serve").addEventListener("click", () => {
-        if (!currentOrder) return; // Không có khách thì không giao
+        if (!currentOrder) return;
 
         if (JSON.stringify(currentBanhMi) === JSON.stringify(currentOrder.req)) {
             // ĐÚNG MÓN
@@ -53,18 +54,15 @@ document.addEventListener("DOMContentLoaded", () => {
             updateMoney(currentOrder.price);
             showFloatingText(`+${currentOrder.price} VNĐ`, "good");
             
-            // Dọn khay, đuổi khách cũ, đón khách mới
             currentBanhMi = [];
             updatePlate();
-            customerOrderUI.classList.add("hidden");
-            customerSprite.classList.add("hidden");
-            currentOrder = null;
-            
-            setTimeout(spawnCustomer, 1500); // 1.5s sau khách mới tới
+            dismissCustomer();
+            setTimeout(spawnCustomer, 1500); 
         } else {
             // SAI MÓN
+            kitchenArea.classList.remove("shake");
+            void kitchenArea.offsetWidth; // Trigger reflow
             kitchenArea.classList.add("shake");
-            setTimeout(() => kitchenArea.classList.remove("shake"), 500);
             showFloatingText("Sai món rồi!", "bad");
         }
     });
@@ -73,21 +71,30 @@ document.addEventListener("DOMContentLoaded", () => {
         plateDisplay.innerText = currentBanhMi.length === 0 ? "Chưa có gì" : currentBanhMi.join(" ➡ ");
     }
 
-    // --- LOGIC KHÁCH HÀNG ---
+    function dismissCustomer() {
+        customerOrderUI.classList.add("hidden");
+        customerSprite.classList.add("hidden");
+        customerSprite.classList.remove("slide-in-right");
+        patienceBar.classList.remove("pulse-danger");
+        currentOrder = null;
+    }
+
+    // Khách đến
     function spawnCustomer() {
-        // Random 1 công thức trong mảng recipes
         currentOrder = recipes[Math.floor(Math.random() * recipes.length)];
         orderText.innerText = `💭 Cho 1 ổ: ${currentOrder.name}`;
         
         customerOrderUI.classList.remove("hidden");
         customerSprite.classList.remove("hidden");
         
-        // Reset thanh kiên nhẫn
+        // Hiệu ứng khách trượt vào
+        customerSprite.classList.add("slide-in-right");
+        
         currentPatience = 100;
         patienceBar.style.width = "100%";
         patienceBar.style.backgroundColor = "#4caf50";
+        patienceBar.classList.remove("pulse-danger");
 
-        // Tốc độ trừ kiên nhẫn. Nếu có quạt thì khách chờ lâu hơn
         const dropRate = hasFan ? 0.7 : 1.5; 
 
         clearInterval(patienceTimer);
@@ -95,30 +102,30 @@ document.addEventListener("DOMContentLoaded", () => {
             currentPatience -= dropRate;
             patienceBar.style.width = `${currentPatience}%`;
 
-            if (currentPatience < 50) patienceBar.style.backgroundColor = "#ff9800"; // Cam
-            if (currentPatience < 20) patienceBar.style.backgroundColor = "#f44336"; // Đỏ
+            if (currentPatience < 50) patienceBar.style.backgroundColor = "#ff9800";
+            if (currentPatience < 20) {
+                patienceBar.style.backgroundColor = "#f44336";
+                patienceBar.classList.add("pulse-danger"); // Nhấp nháy cảnh báo
+            }
 
             if (currentPatience <= 0) {
-                // HẾT GIỜ - Khách bỏ đi
+                // HẾT GIỜ
                 clearInterval(patienceTimer);
                 showFloatingText("Khách bỏ đi rồi!", "bad");
                 
-                customerOrderUI.classList.add("hidden");
-                customerSprite.classList.add("hidden");
-                currentOrder = null;
-                currentBanhMi = []; // Bỏ luôn bánh đang làm
+                dismissCustomer();
+                currentBanhMi = []; 
                 updatePlate();
 
-                setTimeout(spawnCustomer, 3000); // 3s sau khách mới tới
+                setTimeout(spawnCustomer, 3000); 
             }
-        }, 100); // Cứ 0.1s trừ 1 lần
+        }, 100); 
     }
 
-    // --- LOGIC HỆ THỐNG (Tiền, Cửa hàng, UI) ---
     function updateMoney(amount) {
         money += amount;
         moneyDisplay.innerText = money.toLocaleString('vi-VN');
-        localStorage.setItem("banhmi_money", money); // Lưu tiền vào trình duyệt
+        localStorage.setItem("banhmi_money", money);
         checkShop();
     }
 
@@ -141,16 +148,18 @@ document.addEventListener("DOMContentLoaded", () => {
             hasFan = true;
             localStorage.setItem("banhmi_fan", "true");
             checkShop();
-            showFloatingText("Đã mua Quạt! Khách sẽ kiên nhẫn hơn", "good");
+            showFloatingText("Đã mua Quạt! Mát rượi", "good");
         }
     });
 
     function showFloatingText(msg, type) {
         const el = document.createElement("div");
-        el.className = `floating-text ${type}`;
+        // Gọi class fly-up-fade từ file animations.css
+        el.className = `floating-text fly-up-fade ${type}`;
         el.innerText = msg;
         floatingContainer.appendChild(el);
-        // Xóa element sau khi animation kết thúc (1.5s)
-        setTimeout(() => el.remove(), 1500);
+        
+        // Xóa element khi hoạt ảnh 1.2s kết thúc
+        setTimeout(() => el.remove(), 1200);
     }
 });
