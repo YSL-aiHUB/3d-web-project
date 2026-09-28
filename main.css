@@ -89,3 +89,87 @@ body {
 .action-btn.trash {
     background: #f44336;
 }
+/* --- Các nâng cấp UI --- */
+#shop-area {
+    position: absolute;
+    top: 80px;
+    left: 20px;
+    background: #ffcc80;
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid #e65100;
+}
+
+.btn-buy {
+    display: block;
+    margin-top: 5px;
+    cursor: pointer;
+    background: #fff;
+    border: 1px solid #333;
+    padding: 5px;
+}
+.btn-buy:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+/* --- Thanh kiên nhẫn --- */
+.patience-bar-container {
+    width: 100%;
+    height: 10px;
+    background-color: #ddd;
+    border: 1px solid #333;
+    margin-top: 5px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+#patience-bar {
+    width: 100%;
+    height: 100%;
+    background-color: #4caf50;
+    transition: width 0.1s linear, background-color 0.3s;
+}
+
+/* --- Hiệu ứng Rung lắc (Khi làm sai) --- */
+.shake {
+    animation: shake 0.5s;
+}
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+/* --- Thông báo bay lên (Tiền thưởng) --- */
+#floating-text-container {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 100;
+}
+
+.floating-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: #4caf50;
+    text-shadow: 2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff;
+    animation: floatUp 1.5s forwards;
+    position: absolute;
+}
+.floating-text.bad { color: #f44336; }
+
+@keyframes floatUp {
+    0% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-50px); }
+}
