@@ -20,4 +20,4 @@ Trò chơi được viết hoàn toàn bằng HTML, CSS và Vanilla JavaScript, 
 
 1. Clone repository này về máy:
    ```bash
-   git clone [https://github.com/YSL-aiHUB/3d-web-project/edit/main/README.md
+   git clone [https://github.com/YSL-aiHUB/3d-web-project] (https://github.com/YSL-aiHUB/3d-web-project)
