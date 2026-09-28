@@ -1,0 +1,49 @@
+/* css/reset.css */
+
+/* Box-sizing border-box giúp việc tính toán width/height bao gồm cả padding và border, tránh vỡ layout */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Xóa margin và padding mặc định của thẻ body và các thẻ tiêu đề/danh sách */
+body, h1, h2, h3, h4, p, ul, ol, figure, blockquote, dl, dd {
+    margin: 0;
+    padding: 0;
+}
+
+/* Đảm bảo hình ảnh không bị vượt quá kích thước khung chứa */
+img, picture {
+    max-width: 100%;
+    display: block;
+}
+
+/* Loại bỏ gạch chân mặc định của thẻ link */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Chuẩn hóa nút bấm và input */
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: 100%;
+    margin: 0;
+}
+
+/* Xóa outline (đường viền xanh/đen bao quanh khi click) của nút bấm, chỉ hiển thị outline khi dùng bàn phím (tab) */
+button:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Thiết lập font chữ cơ bản và độ cao dòng mượt mà */
+html {
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden; /* Ngăn scroll ngang không mong muốn */
+}
